@@ -14,18 +14,18 @@
     function addListener() {
        let tables = document.querySelectorAll("table.market_commodity_orders_table");
         for (let i=0; i<tables.length; i++){
-            let tbody = tables[i].children[0];
-            for (let j=1; j<tbody.children.length; j++){
-                let tr = tbody.children[j];
-                let th = tr.children[0];
-                th.style.cursor = "pointer";
-                th.style.transition="0.25s";
-                th.onclick = ()=> {
-                    let price = th.textContent.split(" ")[0];
+            let tbody = tables[i].getElementsByTagName("tbody")[0];
+            let rows = tbody.getElementsByTagName("tr");
+            for (let j=1; j<rows.length; j++){
+                let td = rows[j].getElementsByTagName("td")[0];
+                td.style.cursor = "pointer";
+                td.style.transition="0.25s";
+                td.onclick = ()=> {
+                    let price = td.textContent.split(" ")[0];
                     navigator.clipboard.writeText(price)
                         .then( ()=> {
-                        th.style.color = "#ffff00";
-                        setTimeout ( () => {th.style.color = "#8F98A0"}, 500);
+                        td.style.color = "#ffff00";
+                        setTimeout ( () => {td.style.color = "#8F98A0"}, 500);
                     }
                     );
                 }
@@ -33,7 +33,7 @@
         }
         let summaryPrice = document.getElementsByClassName("market_commodity_order_summary");
         for (let i=0; i<summaryPrice.length; i++) {
-            let priceSpan = summaryPrice[i].children[1];
+            let priceSpan = summaryPrice[i].getElementsByClassName("market_commodity_orders_header_promote")[1];
             priceSpan.style.cursor = "pointer";
             priceSpan.style.transition="0.25s";
             priceSpan.onclick = ()=> {
@@ -49,7 +49,7 @@
         }
         let buyRequest = document.getElementById("market_commodity_buyrequests");
         if (buyRequest){
-            let buyRequestPrice = buyRequest.children[1];
+            let buyRequestPrice = buyRequest.getElementsByClassName("market_commodity_orders_header_promote")[1];
             buyRequestPrice.style.cursor = "pointer";
             buyRequestPrice.style.transition="0.25s";
             buyRequestPrice.onclick = ()=> {
@@ -61,7 +61,6 @@
                 });
             }
         }
-        //tables[0].children[0].children[0].children[0].onclick = () => {console.log("clicked")};
     }
     setInterval(addListener, 500);
     let itemName = document.getElementById("largeiteminfo_item_name");
