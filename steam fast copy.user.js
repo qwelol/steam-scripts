@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         steam fast copy
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  fas copy steam items price
 // @author       damarus
 // @match        https://steamcommunity.com/market/listings/*
@@ -12,6 +12,7 @@
     'use strict';
 
     function addListener() {
+        // sell and buy orders table
        let tables = document.querySelectorAll("table.market_commodity_orders_table");
         for (let i=0; i<tables.length; i++){
             let tbody = tables[i].getElementsByTagName("tbody")[0];
@@ -22,6 +23,7 @@
                 td.style.transition="0.25s";
                 td.onclick = ()=> {
                     let price = td.textContent.split(" ")[0];
+                    price = price.trim();
                     navigator.clipboard.writeText(price)
                         .then( ()=> {
                         td.style.color = "#ffff00";
@@ -31,22 +33,23 @@
                 }
             }
         }
+        // top price in buy and sale requests
         let summaryPrice = document.getElementsByClassName("market_commodity_order_summary");
         for (let i=0; i<summaryPrice.length; i++) {
             let priceSpan = summaryPrice[i].getElementsByClassName("market_commodity_orders_header_promote")[1];
             priceSpan.style.cursor = "pointer";
             priceSpan.style.transition="0.25s";
             priceSpan.onclick = ()=> {
-                    let price = priceSpan.textContent.split(" ")[0];
-                    navigator.clipboard.writeText(price)
-                        .then( ()=> {
-                        priceSpan.style.color = "#ffff00";
-                        setTimeout ( () => {priceSpan.style.color = "#ffffff"}, 500);
-                    }
-                    );
-                }
-
+                let price = priceSpan.textContent.split(" ")[0];
+                price = price.trim();
+                navigator.clipboard.writeText(price)
+                    .then( ()=> {
+                    priceSpan.style.color = "#ffff00";
+                    setTimeout ( () => {priceSpan.style.color = "#ffffff"}, 500);
+                });
+            }
         }
+        // buyRequest
         let buyRequest = document.getElementById("market_commodity_buyrequests");
         if (buyRequest){
             let buyRequestPrice = buyRequest.getElementsByClassName("market_commodity_orders_header_promote")[1];
@@ -54,11 +57,41 @@
             buyRequestPrice.style.transition="0.25s";
             buyRequestPrice.onclick = ()=> {
                 let price = buyRequestPrice.textContent.split(" ")[0];
+                price = price.trim();
                 navigator.clipboard.writeText(price)
                     .then( ()=> {
                     buyRequestPrice.style.color = "#ffff00";
                     setTimeout ( () => {buyRequestPrice.style.color = "#ffffff"}, 500);
                 });
+            }
+        }
+        // listing rows
+        let listingRows = document.getElementsByClassName("market_listing_row market_recent_listing_row");
+        if (listingRows.length){
+            for (let i=0; i<listingRows.length; i++){
+                let singleListing = listingRows[i].querySelector(".market_table_value");
+                let priceSpan = listingRows[i].querySelector(".market_listing_price.market_listing_price_with_fee");
+                let itemName = listingRows[i].querySelector(".market_listing_item_name.economy_item_hoverable");
+                priceSpan.style.cursor = "pointer";
+                priceSpan.style.transition="0.25s";
+                singleListing.onclick = () => {
+                    let price = priceSpan.textContent.split(" ")[0];
+                    price = price.trim();
+                    navigator.clipboard.writeText(price)
+                        .then( ()=> {
+                        priceSpan.style.color = "#ffff00";
+                        setTimeout ( () => {priceSpan.style.color = "#ffffff"}, 500);
+                    });
+                }
+                itemName.style.cursor = "pointer";
+                itemName.style.transition="0.25s";
+                itemName.onclick = () => {
+                    navigator.clipboard.writeText(itemName.textContent)
+                        .then( ()=> {
+                        itemName.style.color = "#ffff00";
+                        setTimeout ( () => {itemName.style.color = "#ffffff"}, 500);
+                    });
+                }
             }
         }
     }
@@ -74,4 +107,3 @@
             });
     });
 })();
-
