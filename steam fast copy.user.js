@@ -26,8 +26,9 @@
                     price = price.trim();
                     navigator.clipboard.writeText(price)
                         .then( ()=> {
+                        let oldColor = td.style.color;
                         td.style.color = "#ffff00";
-                        setTimeout ( () => {td.style.color = "#8F98A0"}, 500);
+                        setTimeout ( () => {td.style.color = oldColor}, 500);
                     }
                     );
                 }
@@ -44,8 +45,9 @@
                 price = price.trim();
                 navigator.clipboard.writeText(price)
                     .then( ()=> {
+                    let oldColor = priceSpan.style.color;
                     priceSpan.style.color = "#ffff00";
-                    setTimeout ( () => {priceSpan.style.color = "#ffffff"}, 500);
+                    setTimeout ( () => {priceSpan.style.color = oldColor}, 500);
                 });
             }
         }
@@ -60,8 +62,9 @@
                 price = price.trim();
                 navigator.clipboard.writeText(price)
                     .then( ()=> {
+                    let oldColor = buyRequestPrice.style.color;
                     buyRequestPrice.style.color = "#ffff00";
-                    setTimeout ( () => {buyRequestPrice.style.color = "#ffffff"}, 500);
+                    setTimeout ( () => {buyRequestPrice.style.color = oldColor}, 500);
                 });
             }
         }
@@ -79,8 +82,9 @@
                     price = price.trim();
                     navigator.clipboard.writeText(price)
                         .then( ()=> {
+                        let oldColor = priceSpan.style.color;
                         priceSpan.style.color = "#ffff00";
-                        setTimeout ( () => {priceSpan.style.color = "#ffffff"}, 500);
+                        setTimeout ( () => {priceSpan.style.color = oldColor}, 500);
                     });
                 }
                 itemName.style.cursor = "pointer";
@@ -88,22 +92,25 @@
                 itemName.onclick = () => {
                     navigator.clipboard.writeText(itemName.textContent)
                         .then( ()=> {
+                        let oldColor = itemName.style.color;
                         itemName.style.color = "#ffff00";
-                        setTimeout ( () => {itemName.style.color = "#ffffff"}, 500);
+                        setTimeout ( () => {itemName.style.color = oldColor}, 500);
                     });
                 }
             }
         }
     }
     setInterval(addListener, 500);
+    // item name
     let itemName = document.getElementById("largeiteminfo_item_name");
     itemName.style.transition = "0.45s";
     itemName.style.cursor = "pointer";
     itemName.addEventListener("click", ()=> {
             navigator.clipboard.writeText(itemName.textContent)
                 .then(() => {
+                let oldColor = itemName.style.color;
                 itemName.style.color = "#ffff00";
-                setTimeout ( () => {itemName.style.color = "rgb(210, 210, 210)"}, 500);
+                setTimeout ( () => {itemName.style.color = oldColor}, 500);
             });
     });
 })();
